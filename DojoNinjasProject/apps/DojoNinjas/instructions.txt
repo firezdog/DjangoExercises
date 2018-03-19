@@ -1,0 +1,22 @@
+1. Crate 3 Dojos:
+
+Dojo.objects.create(name="CodingDojo Silicon Valley", city="Mountain View", state="CA")
+Dojo.objects.create(name="CodingDojo Seattle", city="Seattle", state="WA")
+Dojo.objects.create(name="CodingDojo New York", city="New York", state="NY")
+
+2. Delete the 3 Dojos:
+
+Dojo.objects.get(id=1).delete() etc.
+
+3. Create 3 ninjas that belong to the first dojo you created (now id=4):
+
+e.g. Ninja.objects.create(dojo=Dojo.objects.get(id=4), first_name = "", last_name = "")
+
+4. Retrieva all Ninjas that belong to the first Dojo:
+
+Ninja.objects.filter(dojo=Dojo.objects.get(id=4)) OR
+Ninja.objects.filter(dojo=Dojo.objects.first())
+
+5. Retrieve all Ninjas that belong to the last Dojo:
+
+Ninja.objects.filter(dojo=Dojo.objects.last())

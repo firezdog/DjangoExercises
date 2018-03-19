@@ -1,0 +1,27 @@
+1. Allow use of ORM commands: from apps.user_login.models import *
+2. Retrieve all users: User.objects.all()
+3. Retrieve last user: User.objects.last()
+4. Create record in user: 
+
+    Method A:
+        user1 = User()
+        user1.first_name = ""
+        user1.last_name = ""
+        user1.email_address = ""
+        user1.age = 
+    ============================================
+    Method B:
+        User.objects.create(first_name = "", last_name = "", email_address = "", age = "")
+
+5. Get first user: User.objects.first()
+6. Get users sorted by first_name (DESC): User.objects.order_by("-first_name")
+7. Update a user with id e.g. 3:
+
+    temp = User.objects.get(id=3)
+    temp.last_name = ""
+    temp.save()
+
+8. Delete user with id e.g. 3:
+
+    temp = User.objects.get(id=3)
+    temp.delete()

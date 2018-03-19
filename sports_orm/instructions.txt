@@ -1,0 +1,115 @@
+Your goal for this assignment is to modify apps/leagues/views.py and/or apps/leagues/templates/leagues/index.html so that instead the page shows:
+
+...all baseball leagues
+    context = {
+        "leagues": League.objects.filter(sport="Baseball"),
+        "teams": Team.objects.all(),
+        "players": Player.objects.all(),
+    }
+
+...all womens' leagues
+    context = {
+        "leagues": League.objects.filter(name__contains="Women"),
+        "teams": Team.objects.all(),
+        "players": Player.objects.all(),
+    }
+
+...all leagues where sport is any type of hockey
+    context = {
+        "leagues": League.objects.filter(name__contains="Hockey"),
+        "teams": Team.objects.all(),
+        "players": Player.objects.all(),
+    }
+
+
+...all leagues where sport is something OTHER THAN football
+    context = {
+        "leagues": League.objects.exclude(sport__contains="Football"),
+        "teams": Team.objects.all(),
+        "players": Player.objects.all(),
+    }
+
+...all leagues that call themselves "conferences"
+    context = {
+        "leagues": League.objects.filter(name__contains="Conference"),
+        "teams": Team.objects.all(),
+        "players": Player.objects.all(),
+    }
+
+...all leagues in the Atlantic region
+    context = {
+        "leagues": League.objects.filter(name__contains="Atlantic"),
+        "teams": Team.objects.all(),
+        "players": Player.objects.all(),
+    }
+
+...all teams based in Dallas
+    context = {
+        "leagues": League.objects.all(),
+        "teams": Team.objects.filter(location = "Dallas"),
+        "players": Player.objects.all(),
+    }
+
+...all teams named the Raptors
+    context = {
+        "leagues": League.objects.all(),
+        "teams": Team.objects.filter(team_name = "Raptors"),
+        "players": Player.objects.all(),
+    }
+
+...all teams whose location includes "City"
+    context = {
+        "leagues": League.objects.all(),
+        "teams": Team.objects.filter(location__contains = "City"),
+        "players": Player.objects.all(),
+    }
+
+
+...all teams whose names begin with "T"
+    context = {
+        "leagues": League.objects.all(),
+        "teams": Team.objects.filter(team_name__startswith = "T"),
+        "players": Player.objects.all(),
+    }
+
+...all teams, ordered alphabetically by location
+    context = {
+        "leagues": League.objects.all(),
+        "teams": Team.objects.order_by("location"),
+        "players": Player.objects.all(),
+    }
+
+...all teams, ordered by team name in reverse alphabetical order
+    context = {
+        "leagues": League.objects.all(),
+        "teams": Team.objects.order_by("-team_name"),
+        "players": Player.objects.all(),
+    }
+
+...every player with last name "Cooper"
+    context = {
+        "leagues": League.objects.all(),
+        "teams": Team.objects.all(),
+        "players": Player.objects.all(),
+    }
+
+...every player with first name "Joshua"
+    context = {
+        "leagues": League.objects.all(),
+        "teams": Team.objects.all(),
+        "players": Player.objects.filter(first_name = "Joshua"),
+    }
+
+...every player with last name "Cooper" EXCEPT those with "Joshua" as the first name
+    context = {
+        "leagues": League.objects.all(),
+        "teams": Team.objects.all(),
+        "players": Player.objects.filter(last_name = "Cooper").exclude(first_name = "Joshua"),
+    }
+
+...all players with first name "Alexander" OR first name "Wyatt"
+    context = {
+        "leagues": League.objects.all(),
+        "teams": Team.objects.all(),
+        "players": Player.objects.filter(first_name = "Alexander") | Player.objects.filter(first_name="Wyatt"),
+    }

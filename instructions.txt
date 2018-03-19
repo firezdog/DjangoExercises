@@ -1,0 +1,50 @@
+How to create a new Django project:
+
+Create the project and app directories / make sure Django can find the app directory.
+1. django-admin startproject <project-name>
+2. cd <project-name> => mkdir apps => cd apps => touch __init__.py 
+
+Create the app directory and register the app in settings; test out the server.
+3. python ../manage.py startapp <app_name>
+3. In preferences directory (<project_name>/<project_name>), in settings.py, add 'apps.<app_name>' to INSTALLED_APPS
+4. Enter command: python manage.py runserver from main directory. (test)
+
+Register the apps routes in preferences.
+5. In urls.py (preferences directory), import "include" from django.conf.urls
+6. Add to urlpatterns: url(r'^', include('apps.<app_name>.urls'))
+7. Add urls.py to the app: touch apps/<app_name>/urls.py
+
+Call your first controller function from the app's routes:
+8. From new urls.py import "views" and "url":
+
+    from django.conf.urls import url
+    from . import views
+    urlpatterns = [
+        url(r'^$', views.index)
+    ]
+
+Set up the controller function.
+9. In apps/<app_name>/views.py:
+
+    from django.shortcuts import render, HttpResponse, redirect
+
+    def index(request):
+        context = {}
+        return render(request, 'index.html', context)
+
+10. Templates and static folders may be placed under apps/<app_name>. To reference your static files from a template, insert the following, e.g.:
+    
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+
+or, more generally:
+
+    {% load static %}
+    ... "{% static '<filepath>' %}" ...
+
+11. To set up session counter (from project directory):
+
+python manage.py makemigrations
+python manage.py migrate
+
+Session is accessible through request.session, e.g. request.session[key].  Set variables using the Python dictionaries' built-in "get" function.

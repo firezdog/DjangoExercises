@@ -1,0 +1,26 @@
+#score {
+    outline: 1px solid black;
+    display: inline-block;
+    vertical-align: middle;
+    width: 100px;
+    max-width: 100px;
+    overflow: hidden;
+    padding: 5px 0 5px 5px;
+}
+
+.choice {
+    display: inline-block;
+    border: 1px solid black;
+    margin: 20px 0px 0px 0px;
+    width: 250px;
+    height: 150px;
+    text-align: center;
+}
+
+#activities {
+    outline: 1px solid black;
+    width: 1020px;
+    height: 250px;
+    max-height: 250px;
+    overflow: auto;
+}

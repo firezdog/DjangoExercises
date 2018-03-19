@@ -1,0 +1,31 @@
+Create 3 different user accounts
+    User.objects.create(first_name="Alex") etc.
+
+Have the first user create/upload 2 books.
+    Book.objects.create(name="A La Recherche Du Temps Perdu", uploading_user=(User.objects.get(id=1))) etc.
+Have the second user create/upload 2 other books.
+    etc.    
+Have the third user create/upload 2 other books.
+    etc.
+Have the first user like the last book and the first book
+    Book.objects.last().liking_users.add(User.objects.first())
+    Book.objects.first().liking_users.add(User.objects.first())
+
+Have the second user like the first book and the third book
+    user2 = User.objects.get(id=2)
+    book3 = Book.objects.get(id=3)
+    Book.objects.first().liking_users.add(user2)
+    book3.liking_users.add(user2)
+
+Have the third user like all books
+    user3 = User.objects.get(id=3)
+    for book in Book.objects.all():
+        book.liking_users.add(user3)
+Display all users who like the first book
+    Book.objects.first().liking_users.all()
+Display the user who uploaded the first book
+    Book.objects.first().uploading_user
+Display all users who like the second book
+    Book.objects.get(id=2).liking_users.all()
+Display the user who uploaded the second book
+    Book.objects.get(id=2).uploading_user
