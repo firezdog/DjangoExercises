@@ -113,3 +113,87 @@ Your goal for this assignment is to modify apps/leagues/views.py and/or apps/lea
         "teams": Team.objects.all(),
         "players": Player.objects.filter(first_name = "Alexander") | Player.objects.filter(first_name="Wyatt"),
     }
+
+...all teams in the Atlantic Soccer Conference
+    context = {
+        "leagues": League.objects.all(),
+        "teams": Team.objects.filter(league_id=League.objects.get(id=5)),
+        "players": Player.objects.all()
+    }
+
+...all (current) players on the Boston Penguins
+    context = {
+        "leagues": League.objects.all(),
+        "teams": Team.objects.all(),
+        "players": Player.objects.filter(curr_team_id=Team.objects.get(id=28))
+    }
+
+...all (current) players in the International Collegiate Baseball Conference
+    context = {
+        "leagues": League.objects.all(),
+        "teams": Team.objects.all(),
+        "players": Player.objects.filter(curr_team_id__in=Team.objects.filter(league_id=League.objects.get(name="International Collegiate Baseball Conference")))
+    }
+
+...all (current) players in the American Conference of Amateur Football with last name "Lopez"
+    context = {
+		"leagues": League.objects.all(),
+		"teams": Team.objects.all(),
+		"players": Player.objects.filter(last_name="Lopez").filter(curr_team_id__in=Team.objects.filter(league_id=League.objects.get(name="American Conference of Amateur Football")))
+	}
+
+    Note: to filter by membership in a set, us __in, not =
+
+...all football players
+    context = {
+		"leagues": League.objects.all(),
+		"teams": Team.objects.all(),
+		"players": Player.objects.filter(curr_team_id__in=Team.objects.filter(league_id__in=League.objects.get(name__contains="Football")))
+	}
+
+...all teams with a (current) player named "Sophia"
+    context = {
+		"leagues": League.objects.all(),
+		"teams": Team.objects.filter(curr_players__first_name = "Sophia"),
+		"players": Player.objects.all()
+	}
+
+...all leagues with a (current) player named "Sophia"
+    context = {
+		"leagues": League.objects.filter(teams__curr_players__first_name = "Sophia"),
+		"teams": Team.objects.all(),
+		"players": Player.objects.all()
+	}
+
+...everyone with the last name "Flores" who DOESN'T (currently) play for the Washington Roughriders
+    context = {
+		"leagues": League.objects.all(),
+		"teams": Team.objects.all(),
+		"players": Player.objects.filter(last_name="Flores").exclude(curr_team__name = "Roughriders", curr_team__location = "Washington")
+	}
+
+...all teams, past and present, that Samuel Evans has played with
+    context = {
+		"leagues": League.objects.all(),
+		"teams": Team.objects.filter(all_players__first_name = "Samuel", all_players__last_name = "Evans")
+		"players": Player.objects.all()
+	}
+
+
+...all players, past and present, with the Manitoba Tiger-Cats
+    "players": Player.objects.filter(all_teams__team_name = "Tiger-Cats", all_teams__location = "Manitoba")
+
+...all players who were formerly (but aren't currently) with the Wichita Vikings
+    "players": Player.objects.filter(all_teams__team_name = "Vikings", all_teams__location = "Wichita").exclude(curr_team__team_name = "Vikings", curr_team__location="Wichita")
+
+...every team that Jacob Gray played for before he joined the Oregon Colts
+    Team.objects.filter(all_players__first_name = "Jacob", all_players__last_name = "Gray").exclude(curr_players__first_name = "Jacob", curr_players__last_name = "Gray")
+
+...everyone named "Joshua" who has ever played in the Atlantic Federation of Amateur Baseball Players
+    Player.objects.filter(first_name = "Joshua").filter(all_teams__league__name = "Atlantic Federation of Amateur Baseball Players")
+
+...all teams that have had 12 or more players, past and present. (HINT: Look up the Django annotate function.)
+    Team.objects.annotate(num_players = Count('all_players')).filter(num_players__gt = 12)
+
+...all players and count of teams played for, sorted by the number of teams they've played for
+    Players.objects.annnotate(num_teams = Count('all_teams')).order_by(num_teams)
