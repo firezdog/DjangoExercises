@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Remove {{course.course_name }}</title>
+</head>
+<body>
+    <h1>Are you sure you want to delete the following course?</h1>
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td>{{course.course_name}}</td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td>{{course.description}}</td>
+        </tr>
+        <tr>
+            <form action="/courses/{{course.id}}/delete" method="POST">
+                {% csrf_token %}
+                <td><input type="submit" name="remove" value="Yes"></td>
+                <td><input type="submit" name="remove" value="No"></td>
+            </form>
+        </tr>
+    </table>
+</body>
+</html>

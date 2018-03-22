@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Page For {{course.title}}</title>
+</head>
+<body>
+    <h1>{{course.course_name}}</h1>
+    <p>{{course.description}}</p>
+    <a href="/courses">Back to Home</a>
+    <hr>
+    <h1>Enrolled</h1>
+    {% if students %}
+    <ul>
+        {% for student in students.all %}
+        <li> {{ student.first_name }} {{ student.last_name }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</body>
+</html>
