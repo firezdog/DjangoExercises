@@ -1,0 +1,25 @@
+td {
+    padding-bottom: 1%
+}
+
+#description-cell {
+    padding-left: 5%;
+    padding-right: 5%;
+    width: 50%
+}
+
+.normal_cell {
+    text-align: center
+}
+
+form {
+    display: inline-block
+}
+
+#welcome {
+    display: inline-block
+}
+
+#welcome + a {
+    float: right
+}

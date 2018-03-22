@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Courses</title>
-</head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'courses_app/index.css' %}"></head>
 <body>
-    <h1>Welcome {{user.first_name}}! </h1>
+    <h1 id="welcome">Welcome {{user.first_name}}!</h1>
     <a href="/logout">Logout</a>
     <hr>
     <h1>Add Course</h1>
@@ -45,16 +46,14 @@
         <tbody>
             {% for course in courses %}
             <tr>
-                <td><a href="/courses/{{course.id}}/show">{{ course.course_name }}</a></td>
-                <td>{{ course.creator.first_name }} {{course.creator.last_name }}</td>
-                <td>{{ course.description }}</td>
-                <td>{{ course.date_created }}</td>
-                <td>
+                <td class="normal_cell"><a href="/courses/{{course.id}}/show">{{ course.course_name }}</a></td>
+                <td class="normal_cell">{{ course.creator.first_name }} {{course.creator.last_name }}</td>
+                <td id="description-cell">{{ course.description }}</td>
+                <td class="normal_cell">{{ course.date_created }}</td>
+                <td class="normal_cell">
                     {% if user.id == course.creator.id %}
-                    <a href="/courses/{{course.id}}/remove">remove</a>
+                    <button><a href="/courses/{{course.id}}/remove">remove</a></button>
                     {% endif %} 
-                </td>
-                <td>
                     {% if not user in course.students.all %}
                     <form action="/courses/{{course.id}}/enroll", method="POST">
                         {% csrf_token %}
